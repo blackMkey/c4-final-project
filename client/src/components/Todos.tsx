@@ -143,7 +143,11 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
       return this.renderLoading()
     }
 
-    return this.renderTodosList()
+    if(this.state.todos && this.state.todos.length > 0){
+      return this.renderTodosList()
+    }else{
+      return <h3>Your Todo list is empty</h3>
+    }
   }
 
   renderLoading() {
