@@ -36,6 +36,7 @@ export class TodosAccess {
 
     return items as TodoItem[]
   }
+
   async createTodo(item): Promise<TodoItem> {
     await this.docClient
       .put({
@@ -46,6 +47,7 @@ export class TodosAccess {
 
     return item
   }
+
   async deleteTodoItem(userId: string, todoId: string) {
     logger.info(`Deleting To-do Item with id ${todoId}`)
     await this.docClient
@@ -59,7 +61,57 @@ export class TodosAccess {
       .promise()
     logger.info('To-do Item deleted!')
   }
+
+  async updateTodoItem(
+    userId: string,
+    todoId: string,
+    updatedTodo: TodoUpdate
+  ) {
+    logger.info(`Updating To-do Item with id ${todoId}.`, { updatedTodo })
+    await this.docClient
+      .update({
+        TableName: this.todosTable,
+        Key: {
+          userId,
+          todoId
+        },
+        UpdateExpression: 'set #N = :n, dueDate = :dd, done=:d',
+        ExpressionAttributeNames: {
+          '#N': 'name'
+        },
+        ExpressionAttributeValues: {
+          ':n': updatedTodo.name,
+          ':d': updatedTodo.done,
+          ':dd': updatedTodo.dueDate
+        }
+      })
+      .promise()
+    logger.info('To-do Item updated!')
+  }
+
+  async updateTodoImgUrl(
+    userId: string,
+    todoId: string,
+    attachmentUrl: string
+  ) {
+    logger.info(`Updating attachmentUrl!`, { attachmentUrl })
+    await this.docClient
+      .update({
+        TableName: this.todosTable,
+        Key: {
+          userId,
+          todoId
+        },
+        UpdateExpression: 'set attachmentUrl = :url',
+        ExpressionAttributeValues: {
+          ':url': attachmentUrl
+        }
+      })
+      .promise()
+    logger.info('To-do attachmentUrl updated!')
+  }
 }
+
 function createDynamoDBClient() {
   if (process.env.IS_OFFLINE) {
     logger.info('Creating a local DynamoDB instance')

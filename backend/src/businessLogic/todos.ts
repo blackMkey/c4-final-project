@@ -1,11 +1,9 @@
 import { TodosAccess } from '../dataLayer/todosAcess'
-// import { AttachmentUtils } from '../helpers/attachmentUtils';
+import { getPutSignedUrl } from '../helpers/attachmentUtils';
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
-import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
-import * as createError from 'http-errors'
 
 const todosAccess = new TodosAccess()
 
@@ -30,10 +28,21 @@ export async function createTodo(
   return todosAccess.createTodo(newItem)
 }
 
-export async function updateTodo(){
-  
+export async function updateTodoItem(userId: string, todoId: string,  updatedTodo: UpdateTodoRequest){
+  todosAccess.updateTodoItem(userId, todoId,  updatedTodo)
 }
 
 export async function deleteTodo(userId:string, todoId:string){
   todosAccess.deleteTodoItem(userId, todoId)
+}
+
+export async function updateTodoImgUrl(
+  userId: string,
+  todoId: string,
+  attachmentUrl: string
+) {
+  return await todosAccess.updateTodoImgUrl(userId, todoId, attachmentUrl)
+}
+export async function createAttachmentPresignedUrl(key:string){
+  return await getPutSignedUrl(key)
 }
