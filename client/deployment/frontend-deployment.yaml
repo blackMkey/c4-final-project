@@ -25,6 +25,22 @@ spec:
           limits:
             memory: "1024Mi"
             cpu: "500m"
+        env:
+        - name: REACT_APP_DEV_FRONTEND_ENV_API_ID
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: REACT_APP_DEV_FRONTEND_ENV_API_ID
+        - name: REACT_APP_DEV_FRONTEND_ENV_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: REACT_APP_DEV_FRONTEND_ENV_DOMAIN
+        - name: REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID
         ports:
         - containerPort: 80
       restartPolicy: Always
