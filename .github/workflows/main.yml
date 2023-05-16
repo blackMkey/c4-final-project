@@ -25,5 +25,12 @@ jobs:
         parse-json: true
     - name: print env
       run: |
-          if [ -z ${DEV_FRONTEND_ENV_API_ID+x} ]; then echo "DEV_FRONTEND_ENV_API_ID is unset"; else echo "DEV_FRONTEND_ENV_API_ID is set to '$DEV_FRONTEND_ENV_API_ID'"; fi
-        
+          if [ -z ${DEV_FRONTEND_ENV_API_ID+x} ]; 
+          then echo "DEV_FRONTEND_ENV_API_ID is unset"; 
+          else echo "DEV_FRONTEND_ENV_API_ID is set to '$DEV_FRONTEND_ENV_API_ID'"; fi
+          if [ -z ${DEV_FRONTEND_ENV_DOMAIN+x} ]; 
+          then echo "DEV_FRONTEND_ENV_DOMAIN is unset"; 
+          else echo "DEV_FRONTEND_ENV_DOMAIN is set to '$DEV_FRONTEND_ENV_DOMAIN'"; fi
+          if [ -z ${DEV_FRONTEND_ENV_CLIENT_ID+x} ]; 
+          then echo "DEV_FRONTEND_ENV_CLIENT_ID is unset"; 
+          else echo "DEV_FRONTEND_ENV_CLIENT_ID is set to '$DEV_FRONTEND_ENV_CLIENT_ID'"; fi
