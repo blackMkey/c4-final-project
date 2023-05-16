@@ -25,6 +25,7 @@ jobs:
         secret-ids:
           dev/frontend/env
   checkEnv:
+      needs: getEnv
       name: check env
       runs-on: ubuntu-latest
       steps:
