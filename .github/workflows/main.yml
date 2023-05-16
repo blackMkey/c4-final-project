@@ -19,7 +19,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Read secrets from AWS Secrets Manager into environment variables
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: abhilash1in/aws-secrets-manager-action@v2.1.0
       with:
         secrets: dev/frontend/env
         parse-json: true
