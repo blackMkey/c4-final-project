@@ -28,3 +28,6 @@ jobs:
     - name: print env
       run: |
         echo $DEV_FRONTEND_ENV_API_ID
+        echo "$DEV_FRONTEND_ENV_API_ID"
+        echo ${{ secret.DEV_FRONTEND_ENV_API_ID }}
+        
