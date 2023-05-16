@@ -1,3 +1,4 @@
+[![Docker Compose Actions Workflow](https://github.com/blackMkey/c4-final-project/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/blackMkey/c4-final-project/actions/workflows/main.yml)
 # Serverless TODO
 
 To implement this project, you need to implement a simple TODO application using AWS Lambda and Serverless framework. Search for all comments starting with the `TODO:` in the code to find the placeholders that you need to implement.
