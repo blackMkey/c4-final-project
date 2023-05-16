@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: final-frontend
+  name: final-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: final-frontend
+  template:
+    metadata:
+      labels:
+        app: final-frontend
+    spec:
+      containers:
+      - image: blackmkey/final-frontend:latest
+        name: final-frontend
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
