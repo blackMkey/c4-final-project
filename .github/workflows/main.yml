@@ -26,8 +26,10 @@ jobs:
         parse-json-secrets: true
 
     - name: print env
-      run: |
-        echo $DEV_FRONTEND_ENV_API_ID
       env:
           DEV_FRONTEND_ENV_API_ID: ${{ secrets.DEV_FRONTEND_ENV_API_ID }}
+      run: | 
+        echo $DEV_FRONTEND_ENV_API_ID
+        echo "$DEV_FRONTEND_ENV_API_ID"
+     
         
