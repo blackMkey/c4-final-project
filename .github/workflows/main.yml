@@ -19,17 +19,11 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Read secrets from AWS Secrets Manager into environment variables
-      uses: aws-actions/aws-secretsmanager-get-secrets@v1
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        secret-ids: |
-          dev/frontend/env
-        parse-json-secrets: true
-
+        secrets: dev/frontend/env
+        parse-json: true
     - name: print env
-      env:
-          DEV_FRONTEND_ENV_API_ID: ${{ secrets.DEV_FRONTEND_ENV_API_ID }}
-      run: | 
-        echo $DEV_FRONTEND_ENV_API_ID
-        echo "$DEV_FRONTEND_ENV_API_ID"
-     
+      run: |
+          if [ -z ${DEV_FRONTEND_ENV_API_ID+x} ]; then echo "DEV_FRONTEND_ENV_API_ID is unset"; else echo "DEV_FRONTEND_ENV_API_ID is set to '$DEV_FRONTEND_ENV_API_ID'"; fi
         
