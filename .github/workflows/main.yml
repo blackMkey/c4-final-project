@@ -11,25 +11,20 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-    - name: get env from aws secret
-      uses: aws-actions/aws-secretsmanager-get-secrets@v1
-      with:
-        secret-ids:
-          dev/frontend/env
-  checkEnv:
-      needs: getEnv
-      name: check env
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check if env variable is set after fetching secrets
-          run: if [ -z ${DEV_FRONTEND_ENV+x} ]; then echo "DEV_FRONTEND_ENV is unset"; else echo "DEV_FRONTEND_ENV is set to '$DEV_FRONTEND_ENV'"; fi
+        aws-region: ${{ secrets.AWS_REGION }}
 
+    - name: Read secrets from AWS Secrets Manager into environment variables
+      uses: ccapell/aws-secrets-manager-action@v2.0.1
+      with:
+        secrets: |
+          dev/frontend/env
+        parse-json: true
+
+    - name: Check if env variable is set after fetching secrets
+      run: if [ -z ${DEV_FRONTEND_ENV+x} ]; then echo "DEV_FRONTEND_ENV is unset"; else echo "DEV_FRONTEND_ENV is set to '$DEV_FRONTEND_ENV'"; fi
       
