@@ -54,7 +54,6 @@ export class TodosAccess {
       .delete({
         TableName: this.todosTable,
         Key: {
-          userId,
           todoId
         }
       })

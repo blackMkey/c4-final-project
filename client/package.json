@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.332.0",
     "axios": "^0.21.1",
     "dateformat": "^3.0.3",
     "immutability-helper": "^3.0.0",

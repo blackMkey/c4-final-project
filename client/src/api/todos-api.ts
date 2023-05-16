@@ -1,8 +1,11 @@
-import { apiEndpoint } from '../config'
 import { Todo } from '../types/Todo';
 import { CreateTodoRequest } from '../types/CreateTodoRequest';
 import Axios from 'axios'
 import { UpdateTodoRequest } from '../types/UpdateTodoRequest';
+
+const apiId = process.env.REACT_APP_DEV_FRONTEND_ENV_API_ID
+const apiEndpoint = `https://${apiId}.execute-api.us-east-1.amazonaws.com/dev`
+console.log(apiEndpoint)
 
 export async function getTodos(idToken: string): Promise<Todo[]> {
   console.log('Fetching todos')
