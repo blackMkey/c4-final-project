@@ -41,7 +41,7 @@ jobs:
           cd ./client
           echo '-----------------------------------------------'
           echo '-----------------------------------------------'
-          docker build -t final-frontend:latest .
+          docker build -t ${{ vars.DOCKER_NAME }}/final-frontend:latest .
           echo '-----------------------------------------------'
           echo '-----------------------------------------------'
           docker push ${{ vars.DOCKER_NAME }}/final-frontend:latest
