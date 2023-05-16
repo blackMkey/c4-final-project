@@ -30,8 +30,9 @@ jobs:
       steps:
         - name: npm install, build and test
           run: |
-            echo ${{env.DEV_FRONTEND_ENV_API_ID }}
-            echo ${{env.DEV_FRONTEND_ENV_DOMAIN }}
-            echo ${{env.DEV_FRONTEND_ENV_CLIENT_ID }}
+            echo ${{env.DEV_FRONTEND_ENV }}
+            echo ${{ DEV_FRONTEND_ENV }}
+            echo $DEV_FRONTEND_ENV
+            echo " alo alo $DEV_FRONTEND_ENV"
 
       
