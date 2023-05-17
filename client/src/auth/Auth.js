@@ -1,7 +1,5 @@
 import auth0 from 'auth0-js';
-const domain = process.env.REACT_APP_DEV_FRONTEND_ENV_DOMAIN
-const clientID = process.env.REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID
-const callbackUrl = 'http://localhost:3000/callback'
+import { config } from '../config'
 export default class Auth {
   accessToken;
   idToken;
@@ -9,9 +7,9 @@ export default class Auth {
 
   
   auth0 = new auth0.WebAuth({
-    domain,
-    clientID,
-    redirectUri: callbackUrl, 
+    domain: config.domain,
+    clientID: config.clientID,
+    redirectUri: config.callbackUrl, 
     responseType: 'token id_token',
     scope: 'openid'
   });

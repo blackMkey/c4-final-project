@@ -1,21 +1,13 @@
-FROM node:14-alpine AS build
-ENV REACT_APP_DEV_FRONTEND_ENV_API_ID=$REACT_APP_DEV_FRONTEND_ENV_API_ID
-ENV REACT_APP_DEV_FRONTEND_ENV_DOMAIN=$REACT_APP_DEV_FRONTEND_ENV_DOMAIN
-ENV REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID=$REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID
-WORKDIR /build
-
-COPY package.json package.json
-COPY package-lock.json package-lock.json
-RUN npm ci
-
-COPY public/ public
-COPY src/ src
+# Build Environment
+FROM node:14.8.0-alpine as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --silent
+# Have a .dockerignore file ignoring node_modules and build
+COPY . ./
 RUN npm run build
-
-
-# Stage 2
-FROM nginx:alpine
-ENV REACT_APP_DEV_FRONTEND_ENV_API_ID=$REACT_APP_DEV_FRONTEND_ENV_API_ID
-ENV REACT_APP_DEV_FRONTEND_ENV_DOMAIN=$REACT_APP_DEV_FRONTEND_ENV_DOMAIN
-ENV REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID=$REACT_APP_DEV_FRONTEND_ENV_CLIENT_ID
-COPY --from=build /build/build/ /usr/share/nginx/html
+# Production
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]

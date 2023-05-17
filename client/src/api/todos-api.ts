@@ -2,8 +2,9 @@ import { Todo } from '../types/Todo';
 import { CreateTodoRequest } from '../types/CreateTodoRequest';
 import Axios from 'axios'
 import { UpdateTodoRequest } from '../types/UpdateTodoRequest';
+import { config } from '../config'
 
-const apiId = process.env.REACT_APP_DEV_FRONTEND_ENV_API_ID
+const apiId = config.apiId
 const apiEndpoint = `https://${apiId}.execute-api.us-east-1.amazonaws.com/dev`
 console.log(apiEndpoint)
 console.log('process.env', process.env)
