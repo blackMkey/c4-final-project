@@ -131,6 +131,26 @@ export class TodosAccess {
       .promise()
     logger.info('To-do attachmentUrl updated!')
   }
+  async updateName(userId:string, todoId:string, name:string){
+    logger.info(`Updating name!`, { name })
+    await this.docClient
+      .update({
+        TableName: this.todosTable,
+        Key: {
+          userId,
+          todoId
+        },
+        UpdateExpression: 'set #N = :n',
+        ExpressionAttributeNames: {
+          '#N': 'name'
+        },
+        ExpressionAttributeValues: {
+          ':n': name
+        }
+      })
+      .promise()
+    logger.info('To-do attachmentUrl updated!')
+  }
 }
 
 function createDynamoDBClient() {

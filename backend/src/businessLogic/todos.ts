@@ -32,8 +32,15 @@ export async function updateTodoItem(userId: string, todoId: string,  updatedTod
   todosAccess.updateTodoItem(userId, todoId,  updatedTodo)
 }
 
+export async function updateName(userId: string, todoId: string,  name: string) {
+  await todosAccess.updateName(userId, todoId, name)
+}
+export async function getTodoItem(userId: string, todoId: string){
+  return todosAccess.getTodoItem(userId, todoId)
+}
+
 export async function deleteTodo(userId:string, todoId:string){
-  const item = await todosAccess.getTodoItem(userId, todoId)
+  const item = await getTodoItem(userId, todoId)
 
   if (!item)
     throw new Error('Item not found')  
