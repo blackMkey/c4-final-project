@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
+  - serverless-reqvalidator-plugin
 
 provider:
   name: aws
@@ -103,6 +104,7 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer: Auth
+          reqValidatorName: BodyAndParameter
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -128,6 +130,7 @@ functions:
           path: todos/name/{todoId}
           cors: true
           authorizer: Auth
+          reqValidatorName: BodyAndParameter
           request:
             schemas:
               application/json: ${file(models/update-name-todo-model.json)}
@@ -242,6 +245,15 @@ resources:
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: ApiGatewayRestApi
+    
+    BodyAndParameter:  
+      Type: "AWS::ApiGateway::RequestValidator"
+      Properties:
+        Name: 'only-body'
+        RestApiId: 
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: true
     
     TodosTable:
       Type: AWS::DynamoDB::Table
