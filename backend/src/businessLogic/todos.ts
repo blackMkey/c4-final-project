@@ -33,7 +33,16 @@ export async function updateTodoItem(userId: string, todoId: string,  updatedTod
 }
 
 export async function deleteTodo(userId:string, todoId:string){
-  todosAccess.deleteTodoItem(userId, todoId)
+  const item = await todosAccess.getTodoItem(userId, todoId)
+
+  if (!item)
+    throw new Error('Item not found')  
+
+  if (item.userId !== userId) {
+    throw new Error('User is not authorized to delete item')  
+  }
+
+  await todosAccess.deleteTodoItem(userId, todoId)
 }
 
 export async function updateTodoImgUrl(

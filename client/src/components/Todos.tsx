@@ -166,9 +166,9 @@ export const Todos = (props: TodosProps) => {
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
-              {todo.attachmentUrl && (
+              {todo.attachmentUrl ? (
                 <Image src={todo.attachmentUrl} size="small" wrapped />
-              )}
+              ) : null}
               <Grid.Column width={16}>
                 <Divider />
               </Grid.Column>

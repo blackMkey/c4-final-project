@@ -48,17 +48,39 @@ export class TodosAccess {
     return item
   }
 
-  async deleteTodoItem(userId: string, todoId: string) {
-    logger.info(`Deleting To-do Item with id ${todoId}`)
-    await this.docClient
-      .delete({
-        TableName: this.todosTable,
-        Key: {
-          todoId
-        }
-      })
-      .promise()
-    logger.info('To-do Item deleted!')
+  async deleteTodoItem(userId:string, todoId: string) {
+    logger.info(`Deleting todo item ${todoId} from ${this.todosTable}`)
+
+    await this.docClient.delete({
+      TableName: this.todosTable,
+      Key: {
+        userId,
+        todoId,
+      }
+    }, function(err, data) {
+      if (err) {
+        throw new Error('cannot delete item')  
+      } else {
+        logger.info("Success", data);
+      }
+    }).promise()   
+    logger.info(`Deleted todo item ${todoId} from ${this.todosTable}`) 
+  }
+
+  async getTodoItem(userId:string,todoId: string): Promise<TodoItem> {
+    logger.info(`Getting todo ${todoId} from ${this.todosTable}`)
+
+    const result = await this.docClient.get({
+      TableName: this.todosTable,
+      Key: {
+        userId,
+        todoId
+      }
+    }).promise()
+
+    const item = result.Item
+
+    return item as TodoItem
   }
 
   async updateTodoItem(
