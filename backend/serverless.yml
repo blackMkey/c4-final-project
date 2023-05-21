@@ -76,6 +76,7 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyAndParameter
           request:
             schemas:
               application/json: ${file(models/create-todo-model.json)}
@@ -104,7 +105,10 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer: Auth
-          reqValidatorName: BodyAndParameter
+          reqValidatorName: RequestBodyAndParameter
+          request:
+            schemas:
+              application/json: ${file(models/update-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -130,7 +134,7 @@ functions:
           path: todos/name/{todoId}
           cors: true
           authorizer: Auth
-          reqValidatorName: BodyAndParameter
+          reqValidatorName: RequestBodyAndParameter
           request:
             schemas:
               application/json: ${file(models/update-name-todo-model.json)}
@@ -246,10 +250,10 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
     
-    BodyAndParameter:  
-      Type: "AWS::ApiGateway::RequestValidator"
+    RequestBodyAndParameter:  
+      Type: AWS::ApiGateway::RequestValidator
       Properties:
-        Name: 'only-body'
+        Name: 'request-body-and-parameter'
         RestApiId: 
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
